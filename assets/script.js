@@ -1,12 +1,15 @@
 // Assignment Code
+// These variables set up the characters for the password
 
 var upperCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var lowerCharacters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
-var specialCharacters = '?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+?><!@#$%^&*()_+';
+var specialCharacters = '?><!@#$ %^&*()_+?><!@#$%^&*()_+?><!@#$%^&* ()_+?><!@#$%^&*()_+?> < !@#$%^&*()_+?><!@#$%^&*() _+?><!@#$%^&*()_+?><!@#$%^ &*()_+?><!@ #$%^&*()_+?><! @#$%^& *()_+';
 var numericCharacters = '0123456789012345678901234567890123456789012345678912345678901234567890123456789012345678901234567891234567890123456789012345678901234567890123456789';
+//this variable is an empty string that will be filled with the variable above
 var combinedCharacters = ""
 
 
+//this selects the id generate and stores it's value into a variable
 
 var generateBtn = document.querySelector("#generate");
 
@@ -17,12 +20,19 @@ var generateBtn = document.querySelector("#generate");
 // }
 
 
+/*the writePassword function stores the prompt variables, a global value for passlength,
+the logic for adding the characters string into the empty string, the logic for handling the wrong 
+password length (doesn't include exception for new entering anything that isn't a number), adds logic
+for not putting any of the criteria, stores the password id into a variable + stores the final value
+into a variable = then changes the password id to the final result on the page.
+*/
+
 function writePassword() {
-var numeric = confirm("WOULD YOU LIKE NUMERIC NUMBERS IN YOUR PASSWORD?");
-var upper = confirm("WOULD YOU LIKE UPPERCASE NUMBERS IN YOUR PASSWORD?");
-var lower = confirm("WOULD YOU LIKE LOWERCASE NUMBERS IN YOUR PASSWORD?");
-var special = confirm("WOULD YOU LIKE SPECIAL CHARACTERS IN YOUR PASSWORD?");
-var passLength = prompt("PLEASE SELECT A PASSWORD LENGTH FROM 8 - 128");
+var numeric = confirm("Would you like numbers in your password?");
+var upper = confirm("Would you like uppercase letters in your password?");
+var lower = confirm("Would you like lowercase letters in your password?");
+var special = confirm("Would you like special characters in your password?");
+var passLength = prompt("Please select a password length between 8 and 128");
 window.value = passLength;
 
 if (upper === true){
@@ -56,12 +66,23 @@ console.log(acceptable)
 // console.log(randomizePassword())
 var password = showFinalResult();
   var passwordText = document.querySelector("#password");
+
+
+//This combined characters stops the password from being completely random.
   combinedCharacters = "";
+
+  // result literally does nothing
   result = "";
+
 //generatePassword
+//allows the password variable replace the id=password. on the html document
   passwordText.value = password;
 
 }
+
+/*This line of code allows the user to click the generate button which inturn calls the write password function mentioned
+in the write Password comment
+*/
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
@@ -101,10 +122,29 @@ generateBtn.addEventListener("click", writePassword);
 //   }
 // }
 
+
+
 var acceptable = true;
 
+
+//funmath
+/*
+the randomize password function takes the value of the ammount of characters chosen in 
+writePassword PassLength variable stored in the window.value that is semi global. The function can only be called once 
+variable acceptable is deemed as true after put through the if statements in the write password
+function. Once the function is called by the showFinalFunction the var result is going to hold an empty string to hold the
+new value(password) being constructed. The var charactersLength takes in the length value of combined characters found
+in global after being added from the write password function. A for loop will iterate through the Length value passed from
+window.value from show final result. the result will pick a random number by using the full combinedcharacters list and 
+getting a character at the index of math.floor(math.random()*characterslenth). math.floor returns the largest interger
+less than or equal to a given number, math random picks a floating-point from 0 to 1. this is then multiplied by the number
+of characters within the global string. again this number will be rounded by math.floor and then added to the result string.
+the iteration goes through the length chosen by the user and returns the new string on completion of loop. look to 
+showfinalResult next.
+*/
 function randomizePassword(length) {
   console.log(combinedCharacters)
+ // console.log(length)
   var result = '';
     var charactersLength = combinedCharacters.length;
     for ( var i = 0; i < length; i++ ) {
@@ -115,6 +155,16 @@ function randomizePassword(length) {
    return result;
   
 }
+
+/*
+read above randomizepassword first
+the function showfinal result stores the result value from randomize password, which is the new string created,
+ into final result. an alert is shown to indicate a successful loop and the final password is returned to this
+function. If there was an error in user input in the writePassword function, an alert to start again shows up and
+the acceptable boolean is reset to true. Finally, with most criteria met, the showfinalresult function will be 
+stored in the password variable in the writePassword function where it will replace the contents in the 
+#password id.
+*/
 
 function showFinalResult() {
   if (acceptable === true) {
